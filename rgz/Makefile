@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Werror -Wextra
+CXXFLAGS := -std=c++17 -Wall
 
 BUILD := build/
 OBJ := obj/
@@ -11,9 +11,14 @@ STACK_OBJ := $(OBJ)Stack.o $(OBJ)prog1.o
 QUEUE_OBJ := $(OBJ)Queue.o $(OBJ)prog2.o
 MAINOBJ := $(OBJ)mainprog.o
 
+HELPS := *_help.txt
+
 TARGET := mainprog
 
-all: $(TARGET)
+all: $(TARGET) copy_helps
+
+copy_helps: $(SRC)$(HELPS)
+	cp $^ $(BUILD)
 
 $(TARGET): $(STACK_OBJ) $(QUEUE_OBJ) $(MAINOBJ) | $(BUILD)
 	$(CXX) $(CXXFLAGS) $^ -o $(BUILD)$@
@@ -40,4 +45,4 @@ $(BUILD):
 	mkdir -p $(BUILD)
 
 clean:
-	rm -f $(OBJ)* $(BUILD)$(TARGET)
+	rm -f $(OBJ)* $(BUILD)$(TARGET) $(BUILD)$(HELPS)
